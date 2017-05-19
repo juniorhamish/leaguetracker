@@ -39,3 +39,9 @@ jacocoTestReport {
     }
 }
 test.finalizedBy(project.tasks.jacocoTestReport)
+
+sonarqube {
+    properties {
+        property "sonar.exclusions", "**/Application.java"
+    }
+}
