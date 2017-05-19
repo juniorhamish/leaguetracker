@@ -2,7 +2,7 @@ package uk.co.dajohnston.leaguetracker.model;
 
 public class Association {
 
-    private String name;
+    private final String name;
 
     public Association(String name) {
         this.name = name;
