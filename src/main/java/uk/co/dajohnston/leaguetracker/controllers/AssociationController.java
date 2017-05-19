@@ -1,9 +1,12 @@
 package uk.co.dajohnston.leaguetracker.controllers;
 
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.dajohnston.leaguetracker.model.Association;
@@ -15,12 +18,12 @@ public class AssociationController {
     @Autowired
     private AssociationRepository associationRepository;
 
-    @RequestMapping("/associations")
+    @RequestMapping(value = "/associations", method = GET)
     public Iterable<Association> getAssociations() {
         return associationRepository.findAll();
     }
 
-    @RequestMapping("/associations/{id}")
+    @RequestMapping(value = "/associations/{id}", method = GET)
     public Association getAssociation(@PathVariable Long id) {
         return associationRepository.findOne(id);
     }
@@ -30,9 +33,8 @@ public class AssociationController {
         associationRepository.delete(id);
     }
 
-    @RequestMapping("/associations/create")
-    public Association createAssociation() {
-        Association association = new Association("Dave");
+    @RequestMapping(value = "/associations", method = POST)
+    public Association createAssociation(@RequestBody Association association) {
         associationRepository.save(association);
         return association;
     }
