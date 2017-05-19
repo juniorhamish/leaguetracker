@@ -143,6 +143,7 @@
 
     <!-- Optimization (https://pmd.github.io/latest/pmd-java/rules/java/optimizations.html) -->
     <rule ref="rulesets/java/optimizations.xml">
+        <exclude name="MethodArgumentCouldBeFinal"/>
         <exclude name="LocalVariableCouldBeFinal"/>
     </rule>
 
