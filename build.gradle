@@ -32,6 +32,10 @@ sourceSets {
 
 task integrationTest(type: Test) {
     group = LifecycleBasePlugin.VERIFICATION_GROUP
+    jacoco {
+        destinationFile = file("$buildDir/jacoco/integrationTest.exec")
+        classDumpFile = file("$buildDir/classes/integrationTest")
+    }
     testClassesDir = sourceSets.integrationTest.output.classesDir
     classpath = sourceSets.integrationTest.runtimeClasspath
     outputs.upToDateWhen { false }
