@@ -14,6 +14,36 @@ repositories {
     jcenter()
 }
 
+configurations {
+    integrationTestCompile.extendsFrom testCompile
+    integrationTestCompile.extendsFrom testRuntime
+}
+
+sourceSets {
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/integration-test/java')
+        }
+        resources.srcDir file('src/integration-test/resources')
+    }
+}
+
+task integrationTest(type: Test) {
+    group = LifecycleBasePlugin.VERIFICATION_GROUP
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    outputs.upToDateWhen { false }
+}
+
+check.dependsOn integrationTest
+integrationTest.mustRunAfter test
+
+tasks.withType(Test) {
+    reports.html.destination = file("${reporting.baseDir}/${name}")
+}
+
 dependencies {
     compile 'org.springframework.boot:spring-boot-devtools'
     compile 'org.springframework.boot:spring-boot-starter-data-rest'
@@ -21,6 +51,8 @@ dependencies {
     compile 'com.h2database:h2'
     testCompile 'junit:junit:4.12'
     testCompile 'org.hamcrest:hamcrest-library:1.3'
+    integrationTestCompile 'info.cukes:cucumber-java:1.2.5'
+    integrationTestCompile 'info.cukes:cucumber-junit:1.2.5'
 }
 
 quality {
@@ -38,6 +70,7 @@ jacocoTestReport {
             fileTree(dir: it, exclude: ['**/*Application**'])
         })
     }
+    executionData(test, integrationTest)
 }
 test.finalizedBy(project.tasks.jacocoTestReport)
 

@@ -16,11 +16,23 @@ public class Association {
     private String name;
     private String shortName;
 
+    public long getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
 
     public String getShortName() {
         return shortName;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 }
