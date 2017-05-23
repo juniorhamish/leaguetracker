@@ -49,10 +49,14 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-data-rest'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile 'com.h2database:h2'
+    compile 'com.google.code.gson:gson:2.8.0'
     testCompile 'junit:junit:4.12'
     testCompile 'org.hamcrest:hamcrest-library:1.3'
+    integrationTestCompile 'org.springframework.boot:spring-boot-starter-test'
     integrationTestCompile 'info.cukes:cucumber-java:1.2.5'
     integrationTestCompile 'info.cukes:cucumber-junit:1.2.5'
+    integrationTestCompile 'info.cukes:cucumber-spring:1.2.5'
+    integrationTestCompile 'io.rest-assured:rest-assured:3.0.3'
 }
 
 quality {
