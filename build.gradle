@@ -30,10 +30,16 @@ sourceSets {
     }
 }
 
+test {
+    jacoco {
+        destinationFile = file("target/jacoco.exec")
+    }
+}
+
 task integrationTest(type: Test) {
     group = LifecycleBasePlugin.VERIFICATION_GROUP
     jacoco {
-        destinationFile = file("$buildDir/jacoco/integrationTest.exec")
+        destinationFile = file("target/jacoco-it.exec")
         classDumpFile = file("$buildDir/classes/integrationTest")
     }
     testClassesDir = sourceSets.integrationTest.output.classesDir
@@ -85,6 +91,5 @@ test.finalizedBy(project.tasks.jacocoTestReport)
 sonarqube {
     properties {
         property "sonar.exclusions", "**/Application.java"
-        property "sonar.jacoco.itReportPath", "$buildDir/jacoco/integrationTest.exec"
     }
 }
