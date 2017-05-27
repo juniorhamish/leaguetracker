@@ -85,5 +85,6 @@ test.finalizedBy(project.tasks.jacocoTestReport)
 sonarqube {
     properties {
         property "sonar.exclusions", "**/Application.java"
+        property "sonar.jacoco.itReportPath", "$buildDir/jacoco/integrationTest.exec"
     }
 }
