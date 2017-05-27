@@ -68,6 +68,7 @@ jacoco {
     toolVersion = '0.7.9'
 }
 
+
 sonarqube {
     properties {
         property "sonar.exclusions", "**/Application.java"
