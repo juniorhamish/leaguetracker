@@ -9,7 +9,7 @@ addons:
 jdk:
 - oraclejdk8
 script:
-- ./gradlew integrationTest sonarqube pitest
+- ./gradlew --info integrationTest sonarqube pitest
 cache:
   directories:
   - $HOME/.m2/repository
