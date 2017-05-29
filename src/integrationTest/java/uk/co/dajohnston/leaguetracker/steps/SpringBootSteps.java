@@ -51,4 +51,8 @@ public class SpringBootSteps {
     public Response executeGet(String url) {
         return given().get(url).thenReturn();
     }
+
+    public Response executeDelete(String url) {
+        return given().delete(url).thenReturn();
+    }
 }
