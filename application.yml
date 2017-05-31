@@ -1,12 +1,29 @@
-security:
-  oauth2:
-    client:
-      clientId: 304386753342943
-      clientSecret: cad70bac4cdd59d2e6f7b31c5f9baa63
-      accessTokenUri: https://graph.facebook.com/oauth/access_token
-      userAuthorizationUri: https://www.facebook.com/dialog/oauth
-      tokenName: oauth_token
-      authenticationScheme: query
-      clientAuthenticationScheme: form
-    resource:
-      userInfoUri: https://graph.facebook.com/me
+facebook:
+  client:
+    clientId: 304386753342943
+    clientSecret: cad70bac4cdd59d2e6f7b31c5f9baa63
+    accessTokenUri: https://graph.facebook.com/oauth/access_token
+    userAuthorizationUri: https://www.facebook.com/dialog/oauth
+    tokenName: oauth_token
+    authenticationScheme: query
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: https://graph.facebook.com/me
+github:
+  client:
+    clientId: 853dfdc6c66be2a12b1d
+    clientSecret: 46f31c160144c9edc13c64c4fd498628372b32ef
+    accessTokenUri: https://github.com/login/oauth/access_token
+    userAuthorizationUri: https://github.com/login/oauth/authorize
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: https://api.github.com/user
+twitter:
+  client:
+    clientId: H0a7XjWrQfdYDkhqU4W666rcn
+    clientSecret: zJTLHrbCWG8ZChPPYIolHsusA488P6utZo1DE3MP33xFo1QG2f
+    accessTokenUri: https://api.twitter.com/oauth/access_token
+    userAuthorizationUri: https://api.twitter.com/oauth/authorize
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: https://api.twitter.com/1.1/users/show.json
