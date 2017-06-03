@@ -18,12 +18,13 @@ github:
     clientAuthenticationScheme: form
   resource:
     userInfoUri: https://api.github.com/user
-twitter:
+google:
   client:
-    clientId: H0a7XjWrQfdYDkhqU4W666rcn
-    clientSecret: zJTLHrbCWG8ZChPPYIolHsusA488P6utZo1DE3MP33xFo1QG2f
-    accessTokenUri: https://api.twitter.com/oauth/access_token
-    userAuthorizationUri: https://api.twitter.com/oauth/authorize
+    clientId: 805245582714-4rmtrb09ngikam3o4egfd9qdp88p6oqr.apps.googleusercontent.com
+    clientSecret: DFo8iqeIZmFVJy8eBToaiCtB
+    accessTokenUri: https://accounts.google.com/o/oauth2/token
+    userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth
     clientAuthenticationScheme: form
+    scope: https://www.googleapis.com/auth/userinfo.profile
   resource:
-    userInfoUri: https://api.twitter.com/1.1/users/show.json
+    userInfoUri: https://www.googleapis.com/userinfo/v2/me

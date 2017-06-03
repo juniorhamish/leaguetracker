@@ -37,50 +37,38 @@ public class Application extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.antMatcher("/**").addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
-                .authorizeRequests().antMatchers("/", "/login**").permitAll().anyRequest()
-                .authenticated().and().logout().logoutSuccessUrl("/").permitAll().and().csrf()
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and();
+        http.antMatcher("/**").addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class).authorizeRequests()
+                .antMatchers("/", "/login**").permitAll().anyRequest().authenticated().and().logout().logoutSuccessUrl("/").permitAll()
+                .and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and();
     }
 
     private Filter ssoFilter() {
-        CompositeFilter filter = new CompositeFilter();
+        OAuth2ClientAuthenticationProcessingFilter facebookFilter = createOAuth2Filter("/login/facebook", facebook(),
+                facebookResource().getUserInfoUri());
+        OAuth2ClientAuthenticationProcessingFilter githubFilter = createOAuth2Filter("/login/github", github(),
+                githubResource().getUserInfoUri());
+        OAuth2ClientAuthenticationProcessingFilter googleFilter = createOAuth2Filter("/login/google", google(),
+                googleResource().getUserInfoUri());
+
         List<Filter> filters = new ArrayList<>();
-
-        OAuth2ClientAuthenticationProcessingFilter facebookFilter = new OAuth2ClientAuthenticationProcessingFilter(
-                "/login/facebook");
-        OAuth2RestTemplate facebookTemplate = new OAuth2RestTemplate(facebook(),
-                oauth2ClientContext);
-        facebookFilter.setRestTemplate(facebookTemplate);
-        UserInfoTokenServices tokenServices = new UserInfoTokenServices(
-                facebookResource().getUserInfoUri(), facebook().getClientId());
-        tokenServices.setRestTemplate(facebookTemplate);
-        facebookFilter.setTokenServices(tokenServices);
         filters.add(facebookFilter);
-
-        OAuth2ClientAuthenticationProcessingFilter githubFilter = new OAuth2ClientAuthenticationProcessingFilter(
-                "/login/github");
-        OAuth2RestTemplate githubTemplate = new OAuth2RestTemplate(github(), oauth2ClientContext);
-        githubFilter.setRestTemplate(githubTemplate);
-        tokenServices = new UserInfoTokenServices(githubResource().getUserInfoUri(),
-                github().getClientId());
-        tokenServices.setRestTemplate(githubTemplate);
-        githubFilter.setTokenServices(tokenServices);
         filters.add(githubFilter);
-
-        OAuth2ClientAuthenticationProcessingFilter twitterFilter = new OAuth2ClientAuthenticationProcessingFilter(
-                "/login/twitter");
-        OAuth2RestTemplate twitterTemplate = new OAuth2RestTemplate(twitter(), oauth2ClientContext);
-        twitterFilter.setRestTemplate(twitterTemplate);
-        tokenServices = new UserInfoTokenServices(twitterResource().getUserInfoUri(),
-                twitter().getClientId());
-        tokenServices.setRestTemplate(twitterTemplate);
-        twitterFilter.setTokenServices(tokenServices);
-        filters.add(twitterFilter);
-
+        filters.add(googleFilter);
+        CompositeFilter filter = new CompositeFilter();
         filter.setFilters(filters);
         return filter;
 
+    }
+
+    private OAuth2ClientAuthenticationProcessingFilter createOAuth2Filter(String url, AuthorizationCodeResourceDetails resourceDetails,
+            String userInfoUri) {
+        UserInfoTokenServices tokenServices = new UserInfoTokenServices(userInfoUri, resourceDetails.getClientId());
+        OAuth2RestTemplate template = new OAuth2RestTemplate(resourceDetails, oauth2ClientContext);
+        tokenServices.setRestTemplate(template);
+        OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(url);
+        filter.setRestTemplate(template);
+        filter.setTokenServices(tokenServices);
+        return filter;
     }
 
     @Bean
@@ -108,14 +96,14 @@ public class Application extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    @ConfigurationProperties("twitter.client")
-    public AuthorizationCodeResourceDetails twitter() {
+    @ConfigurationProperties("google.client")
+    public AuthorizationCodeResourceDetails google() {
         return new AuthorizationCodeResourceDetails();
     }
 
     @Bean
-    @ConfigurationProperties("twitter.resource")
-    public ResourceServerProperties twitterResource() {
+    @ConfigurationProperties("google.resource")
+    public ResourceServerProperties googleResource() {
         return new ResourceServerProperties();
     }
 
