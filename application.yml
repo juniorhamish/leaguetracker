@@ -1,30 +1,11 @@
-facebook:
-  client:
-    clientId: 304386753342943
-    clientSecret: cad70bac4cdd59d2e6f7b31c5f9baa63
-    accessTokenUri: https://graph.facebook.com/oauth/access_token
-    userAuthorizationUri: https://www.facebook.com/dialog/oauth
-    tokenName: oauth_token
-    authenticationScheme: query
-    clientAuthenticationScheme: form
-  resource:
-    userInfoUri: https://graph.facebook.com/me
-github:
-  client:
-    clientId: 853dfdc6c66be2a12b1d
-    clientSecret: 46f31c160144c9edc13c64c4fd498628372b32ef
-    accessTokenUri: https://github.com/login/oauth/access_token
-    userAuthorizationUri: https://github.com/login/oauth/authorize
-    clientAuthenticationScheme: form
-  resource:
-    userInfoUri: https://api.github.com/user
-google:
-  client:
-    clientId: 805245582714-4rmtrb09ngikam3o4egfd9qdp88p6oqr.apps.googleusercontent.com
-    clientSecret: DFo8iqeIZmFVJy8eBToaiCtB
-    accessTokenUri: https://accounts.google.com/o/oauth2/token
-    userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth
-    clientAuthenticationScheme: form
-    scope: https://www.googleapis.com/auth/userinfo.profile
-  resource:
-    userInfoUri: https://www.googleapis.com/userinfo/v2/me
+server:
+  port: 8280
+security:
+  oauth2:
+    client:
+      client-id: my-app
+      client-secret: my-app-secret
+      access-token-uri: http://localhost:8180/oauth/token
+      user-authorization-uri: http://localhost:8180/oauth/authorize
+    resource:
+      user-info-uri: http://localhost:8180/me
